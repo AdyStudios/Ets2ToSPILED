@@ -30,7 +30,7 @@ function processData(res){
     if(res == null){
         return;
     }
-    console.log(`statusCode: ${res.status}`);
+    console.log(`statusCode: ${res.status}` + '\nData: ' + res.data);
     receivedData = res.data;
     /*write the recieved data to a file*/
     fs.writeFile('received.txt', receivedData, function(err) {

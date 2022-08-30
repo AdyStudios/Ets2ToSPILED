@@ -2,13 +2,15 @@ const fs = require('fs');
 
 const networking = require('./networking');
 const receivedDataFile = './received.txt';
-const outputFile = './data.json';
+
+const child_proc = require("child_process");
+const sub = child_proc.fork("./counter.js");
 
 const tst = require('trucksim-telemetry');
 const telemetry = tst();
 
 var receivedDataText;
-var logicRunning = false;
+var display = "";
 var currentText = 0;
 
 networking.createServer();
@@ -16,11 +18,10 @@ networking.refreshData();
 
 fs.readFile(receivedDataFile, function(err, data){if(err) return console.log(err);receivedDataText = data.toString();printReceivedData(receivedDataText);});
     
-async function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
+sub.on("message", (message) => {
+  currentText = message.value;
+  console.log(currentText);
+});
 
 function printReceivedData(data){
     console.log("the response was: " + data);
@@ -75,56 +76,19 @@ function updateData(data)
         cargoName: cargoName
     };
     //console.log(completeData);
-    logic(completeData, 5000);
+    logic(completeData);
 }
 
-async function logic(completeData, waitTime){
-    var dummy = "";
-    if(currentText == 0){
-        dummy = completeData.speed;
-        console.log(dummy);
-        await sleep(waitTime);
-        currentText += 1;
-    }
-    if(currentText == 1){
-        dummy = completeData.paused;
-        console.log(dummy);
-        await sleep(waitTime);
-        currentText += 1;
-    }
-    if(currentText == 2){
-        dummy = completeData.gameTime;
-        console.log(dummy);
-        await sleep(waitTime);
-        currentText += 1;
-    }
-    if(currentText == 3){
-        dummy = completeData.jobDestination;
-        console.log(dummy);
-        await sleep(waitTime);
-        currentText += 1;
-    }
-    if(currentText == 4){
-        dummy = completeData.navDistance;
-        console.log(dummy);
-        await sleep(waitTime);
-        currentText += 1;
-    }
-    if(currentText == 5){
-        dummy = completeData.navTime;
-        console.log(dummy);
-        await sleep(waitTime);
-        currentText += 1;
-    }
-    if(currentText == 6){
-        dummy = completeData.cargoName;
-        console.log(dummy);
-        await sleep(waitTime);
-        currentText += 1;
-    }
-    if(currentText == 7){
-        currentText == 0;
-    }
+async function logic(completeData)
+{
+    if(currentText == 0)    display = completeData.speed;
+    else if(currentText == 1)    display = completeData.paused;
+    else if(currentText == 2)    display = completeData.gameTime;
+    else if(currentText == 3)    display = completeData.jobDestination;
+    else if(currentText == 4)    display = completeData.navDistance;
+    else if(currentText == 5)    display = completeData.navTime;
+    else if(currentText == 6)    display = completeData.cargoName;
+    console.log(display);
 }
 
 telemetry.game.on('connected', function() {
