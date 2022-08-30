@@ -10,8 +10,8 @@
 
 MD_Parola Display = MD_Parola(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
   
-const char* ssid = "Telekom-7Y7P2q";
-const char* password = "5643146221867551";
+const char* ssid = "YOUR WFIF";
+const char* password = "YOUR PASSWORD";
 
 String displayText;
   
