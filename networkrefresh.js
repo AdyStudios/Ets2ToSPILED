@@ -1,4 +1,5 @@
 const networking = require('./networking');
+console.log("network refresh started");
 
 async function sleep(ms) {
   return new Promise((resolve) => {
@@ -6,7 +7,6 @@ async function sleep(ms) {
   });
 }
 
-networking.createServer();
 networking.refreshData();
 
 async function loop(){
@@ -14,6 +14,5 @@ async function loop(){
     networking.refreshData();
     loop();
 }
-
 
 loop();

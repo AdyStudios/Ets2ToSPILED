@@ -2,9 +2,11 @@ const fs = require('fs');
 
 const networking = require('./networking');
 const receivedDataFile = './received.txt';
+const postFile = './data.txt';
 
 const child_proc = require("child_process");
 const sub = child_proc.fork("./counter.js");
+const sub2 = child_proc.fork("./networkrefresh.js");
 
 const tst = require('trucksim-telemetry');
 const telemetry = tst();
@@ -14,9 +16,6 @@ var display = "";
 var currentText = 0;
 
 networking.createServer();
-networking.refreshData();
-
-fs.readFile(receivedDataFile, function(err, data){if(err) return console.log(err);receivedDataText = data.toString();printReceivedData(receivedDataText);});
     
 sub.on("message", (message) => {
   currentText = message.value;
@@ -82,12 +81,17 @@ function updateData(data)
 async function logic(completeData)
 {
     if(currentText == 0)    display = completeData.speed;
-    else if(currentText == 1)    display = completeData.paused;
+    else if(currentText == 1)
+    {
+        if(completeData.paused) display = "Paused";
+        else display = "Playing";
+    }
     else if(currentText == 2)    display = completeData.gameTime;
     else if(currentText == 3)    display = completeData.jobDestination;
     else if(currentText == 4)    display = completeData.navDistance;
     else if(currentText == 5)    display = completeData.navTime;
     else if(currentText == 6)    display = completeData.cargoName;
+    fs.writeFileSync(postFile, display);
     console.log(display);
 }
 
