@@ -10,7 +10,7 @@ After that open the project in a command line, (or powershell or code editor) an
 Then you will have to go and edit the main.ino file. Replace the wifi SSID and password, then change the server adress, to your local ip. 
 You will also have to install the following packages: HTTPClient, MD_PAROLA, MD_MX72XX, SPI. Flash the main.ino with the Arduino app onto your esp32 or other microcontroller. 
 
-### How to connect the display
+## How to connect the display
 
 [Wiring image](https://microcontrollerslab.com/wp-content/uploads/2022/01/ESP32-with-MAX7219-led-matrix.jpg)
 If you don't have a Vin pin your esp32 then you will have to use the 3V3 pin for VCC.
