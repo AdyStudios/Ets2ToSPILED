@@ -21,3 +21,6 @@ CS - GPIO 5
 CLK - GPIO 18
 
 If you have any questions contatct me on discord: AdyEndre#7784 or create and issue.
+
+### Notes
+If you have or less display modules change the #DEFINE MAX_DEVICES: to your number of modules.
