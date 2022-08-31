@@ -1,7 +1,14 @@
 # Ets2ToSPILED - Displays Euro Truck Data on an SPI LED with the help of an esp32
 
-###How it works?
+###H ow it works?
 I used a node.js libary called "trucksim-telementry" to get the data from Euro Truck Simulator 2, then I host a local server and send the data to it. The esp32 (or microcontroller of choice) then sends a get request to that server and prints the data that it got.
 
-###How to use it
-First you have to setup trucksim-telementry. To do so you have to simpy install the scs-sdk-plugin [from here](https://github.com/RenCloud/scs-sdk-plugin/releases/tag/V.1.11)
+### How to use it
+First you have to setup trucksim-telementry. To do so you have to simpy install the scs-sdk-plugin [from here](https://github.com/RenCloud/scs-sdk-plugin/releases/tag/V.1.11), and then drop the file into [euro truck installation folder]Euro Truck Simulator 2\bin\win_x64\plugins\bin\win_x64\plugins\
+
+After that open the project in a command line, (or powershell or code editor) and run ```npm install```. This will install all required packages.
+Then you will have to flash the main.ino file onto your esp32 or other microcontroller. 
+
+### How to connect the display
+
+[Wireing](https://microcontrollerslab.com/wp-content/uploads/2022/01/ESP32-with-MAX7219-led-matrix.jpg)
